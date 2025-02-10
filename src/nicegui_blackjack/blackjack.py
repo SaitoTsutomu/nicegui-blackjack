@@ -34,57 +34,39 @@ type Rank = Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 type CardClass = Literal["", "opened", "hidden"]
 
 
-class Card:
+class Card(ui.element):
     """**クラス** | カード
 
-    オブジェクト生成時ではなく、build時に作成するため、ui.elementから派生しない
     :ivar num: 0〜51の識別番号
     :ivar rank: カードの数字
     :ivar suit: カードのスーツ
-    :ivar class_: CSSのスタイル
-    :ivar char: カードの文字
-    :ivar color: 色
-    :ivar click: クリック時の関数
-    :ivar ui: buildで作成した部品
     """
 
     num: int
     rank: Rank
     suit: Suit
-    class_: CardClass
-    char: str
-    color: str
-    click: Callable | None
-    ui: ui.element
 
-    def __init__(self, num: int, *, class_: CardClass = ""):
+    def __init__(self, num: int, *, class_: CardClass = "", click: Callable | None = None):
         """表と裏のdivタグを作成(デフォルトは裏を表示)"""
+        super().__init__("div")
         self.num = num
         self.suit = Suit(num // 13)
         self.rank = cast("Rank", num % 13 + 1)
-        self.class_ = class_
-        self.char = chr(CARD_CODE + self.suit * 16 + self.rank + (self.rank > 11))  # noqa: PLR2004
-        self.color = "black" if self.suit in {Suit.Spade, Suit.Club} else "red-10"
-        self.click = None
-
-    def build(self) -> None:
-        """作成"""
-        self.ui = ui.element("div").classes(f"card {self.class_}")
-        if self.click:
-            self.ui.on("click", self.click)
-        with self.ui:
+        char = chr(CARD_CODE + self.suit * 16 + self.rank + (self.rank > 11))  # noqa: PLR2004
+        color = "black" if self.suit in {Suit.Spade, Suit.Club} else "red-10"
+        # GUI作成
+        with self.classes(f"card {class_}").on("click", click):
             ui.label(chr(CARD_CODE)).classes("face front text-blue-10")
-            ui.label(self.char).classes(f"face back text-{self.color}")
+            ui.label(char).classes(f"face back text-{color}")
+
+    def open(self) -> None:
+        """カードを表にする"""
+        self.classes("opened")
 
     @property
     def opened(self) -> bool:
-        """見えているか"""
-        return self.class_ == "opened"
-
-    def open(self) -> None:
-        """カードをひっくり返す"""
-        self.class_ = "opened"
-        self.ui.classes(self.class_)
+        """表かどうか"""
+        return "opened" in self.classes
 
     def point(self) -> int:
         """カードの得点"""
@@ -99,44 +81,41 @@ class Card:
         return r + s
 
 
-class Owner:
+class Owner(ui.element):
     """**クラス** | 手札を持ち、カードを引ける人
 
     :ivar cards: 手札(カードのリスト)
+    :ivar container: カード追加時のUIコンテナ
     :cvar wait: カードをめくる時間
     """
 
     cards: list[Card]
+    container: ui.element
     wait: ClassVar[float] = 0.6
 
-    def __init__(self, nums: Iterable[int], *, opened_num: int):
-        """手札作成"""
-        self.cards = [Card(num, class_="opened" if i < opened_num else "") for i, num in enumerate(nums)]
+    def __init__(self, nums: Iterable[int], *, opened_num: int, container: ui.element, name: str):
+        """GUIと手札の作成"""
+        super().__init__("div")
+        self.container = container
+        with self.container:
+            with ui.column().classes("mt-6"):
+                ui.label(f"{name}'s cards").classes("text-2xl")
+                ui.label().bind_text_from(self, "message").classes("text-2xl pl-6")
+            self.cards = [Card(num, class_="opened" if i < opened_num else "") for i, num in enumerate(nums)]
 
-    def add_card(self, num: int, *, class_: CardClass = "") -> Card:
+    def add_card(self, num: int, *, class_: CardClass = "", click: Callable | None = None) -> None:
         """手札に一枚加える"""
-        card = Card(num, class_=class_)
-        self.cards.append(card)
-        return card
+        with self.container:
+            self.cards.append(Card(num, class_=class_, click=click))
 
-    def build(self) -> None:
-        """作成"""
-        ui.label().bind_text_from(self, "message").classes("text-2xl")
-        for card in self.cards:
-            card.build()
-
-    @classmethod
-    def _point(cls, cards: list[Card]) -> int:
-        """手札の合計得点(任意のカードリスト用)"""
+    def point(self) -> int:
+        """手札の合計得点"""
+        cards = [card for card in self.cards if card.opened]
         point_ = sum(cd.point() for cd in cards)
         for cd in cards:
             if cd.rank == 1 and point_ + 10 <= POINT21:
                 point_ += 10
         return point_
-
-    def point(self):
-        """手札の合計得点"""
-        return self._point([card for card in self.cards if card.opened])
 
     @property
     def message(self) -> str:
@@ -145,7 +124,7 @@ class Owner:
 
     def __str__(self):
         """文字列化"""
-        return " ".join(f"{card}" if card.class_ == "opened" else f"({card})" for card in self.cards)
+        return " ".join(f"{card}" if card.opened else f"({card})" for card in self.cards)
 
 
 class Dealer(Owner):
@@ -158,19 +137,15 @@ class Dealer(Owner):
 
     async def act(self, game: "Game") -> None:
         """ディーラーの手番の処理"""
-        cards: list[Card] = [Card(card.num, class_="opened") for card in self.cards]
-        while self._point(cards) < self.LOWER:
-            cards.append(Card(game.pop(), class_="opened"))
-        for card in cards[2:]:  # 3つ目以降を表示せずに追加
-            self.add_card(card.num, class_="hidden")
-        game.change_ask(ask_draw=False, message="")
+        game.change_ask(ask_draw=False, message="Dealer's turn")
         logger.debug("Dealer.act: Point %s", self.point())
-        for card in self.cards[1:]:
-            card.ui.classes(remove="hidden")
-            await asyncio.sleep(self.wait / 3)
-            card.open()
+        while self.point() < self.LOWER:
+            if self.cards[1].opened:  # 2枚目がopenedなら3枚目以降を追加
+                self.add_card(game.pop())
+                await asyncio.sleep(self.wait / 3)
+            self.cards[-1].open()
             await asyncio.sleep(self.wait)
-            logger.debug("Dealer.act: Point %s, Opened %s", self.point(), card)
+            logger.debug("Dealer.act: Opened %s, Point %s", self.cards[-1], self.point())
 
 
 class Player(Owner):
@@ -178,8 +153,7 @@ class Player(Owner):
 
     def draw(self, game: "Game") -> None:
         """山札から裏のままカードを引く"""
-        card = self.add_card(game.pop())
-        card.click = lambda: self.act(game)
+        self.add_card(game.pop(), click=lambda: self.act(game))
 
     async def act(self, game: "Game") -> None:
         """プレイヤーの処理"""
@@ -219,38 +193,28 @@ class Game(ui.element):
             if seed is not None:
                 random.seed(seed)
             random.shuffle(self.nums)
-        self.player = Player((self.pop(), self.pop()), opened_num=2)
-        self.dealer = Dealer((self.pop(), self.pop()), opened_num=1)
         self.change_ask(ask_draw=True)
+        # GUI作成
+        self.clear()
+        with self, ui.card().classes("no-select"):
+            ui.label("Blackjack Game").classes("text-3xl")
+            with ui.column():
+                self.dealer = Dealer((self.pop(), self.pop()), opened_num=1, container=ui.row(), name="Dealer")
+                self.player = Player((self.pop(), self.pop()), opened_num=2, container=ui.row(), name="Player")
+                with ui.row():
+                    ui.label().bind_text(self, "message").classes("text-2xl font-bold")
+                    ui.button("Yes", on_click=self.player_turn).bind_visibility_from(self, "ask_draw")
+                    ui.button("No", on_click=self.dealer_turn).bind_visibility_from(self, "ask_draw")
+                ui.button("New Game", on_click=self.start)
 
-    def change_ask(self, *, ask_draw: bool, message: str = "Click Card") -> None:
+    def change_ask(self, *, ask_draw: bool, message: str = "Click your card.") -> None:
         """プレイヤーにカードを引くか尋ねるように設定"""
         self.ask_draw = ask_draw
         self.message = "Draw card?" if ask_draw else message
-        self.build()
 
     def pop(self) -> int:
         """山札から一枚取る"""
         return self.nums.pop()
-
-    def build(self) -> None:
-        """GUI作成"""
-        self.clear()
-        with self.classes("no-select"):
-            ui.label("Blackjack Game").classes("text-3xl")
-            with ui.column():
-                with ui.row():
-                    ui.label("Dealer").classes("text-2xl")
-                    self.dealer.build()
-                with ui.row():
-                    ui.label("Player").classes("text-2xl")
-                    self.player.build()
-                with ui.row():
-                    ui.label().bind_text(self, "message").classes("text-2xl")
-                    if self.ask_draw:
-                        ui.button("Yes", on_click=self.player_turn)
-                        ui.button("No", on_click=self.dealer_turn)
-                ui.button("New Game", on_click=self.start)
 
     def player_turn(self) -> None:
         """プレイヤーが山札から裏のままカードを引く"""
