@@ -363,6 +363,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#src.nicegui_blackjack.Game.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#src.nicegui_blackjack.Game.change_ask" class="md-nav__link">
     <span class="md-ellipsis">
       change_ask
@@ -701,6 +710,15 @@
   
     <nav class="md-nav" aria-label="Game">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#src.nicegui_blackjack.Game.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __init__
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#src.nicegui_blackjack.Game.change_ask" class="md-nav__link">
@@ -1079,7 +1097,7 @@
 
     <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>, num: <span style="color: #007020">int</span>, <span style="color: #333">*</span>, class_: CardClass <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;&quot;</span>, click: Callable <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>):
 <span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;表と裏のdivタグを作成(デフォルトは裏を表示)&quot;&quot;&quot;</span>
-        <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="background-color: #FFF0F0">&quot;div&quot;</span>)
+        <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
         <span style="color: #007020">self</span><span style="color: #333">.</span>num <span style="color: #333">=</span> num
         <span style="color: #007020">self</span><span style="color: #333">.</span>suit <span style="color: #333">=</span> Suit(num <span style="color: #333">//</span> <span style="color: #00D; font-weight: bold">13</span>)
         <span style="color: #007020">self</span><span style="color: #333">.</span>rank <span style="color: #333">=</span> cast(<span style="background-color: #FFF0F0">&quot;Rank&quot;</span>, num <span style="color: #333">%</span> <span style="color: #00D; font-weight: bold">13</span> <span style="color: #333">+</span> <span style="color: #00D; font-weight: bold">1</span>)
@@ -1174,7 +1192,7 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">59</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">60</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>, num: <span style="color: #007020">int</span>, <span style="color: #333">*</span>, class_: CardClass <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;&quot;</span>, click: Callable <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>):
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;表と裏のdivタグを作成(デフォルトは裏を表示)&quot;&quot;&quot;</span>
-    <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="background-color: #FFF0F0">&quot;div&quot;</span>)
+    <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
     <span style="color: #007020">self</span><span style="color: #333">.</span>num <span style="color: #333">=</span> num
     <span style="color: #007020">self</span><span style="color: #333">.</span>suit <span style="color: #333">=</span> Suit(num <span style="color: #333">//</span> <span style="color: #00D; font-weight: bold">13</span>)
     <span style="color: #007020">self</span><span style="color: #333">.</span>rank <span style="color: #333">=</span> cast(<span style="background-color: #FFF0F0">&quot;Rank&quot;</span>, num <span style="color: #333">%</span> <span style="color: #00D; font-weight: bold">13</span> <span style="color: #333">+</span> <span style="color: #00D; font-weight: bold">1</span>)
@@ -1602,7 +1620,41 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">232</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">233</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">234</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">235</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">class</span><span style="color: #BBB"> </span><span style="color: #B06; font-weight: bold">Game</span>(ui<span style="color: #333">.</span>element):
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">235</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">236</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">237</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">238</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">239</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">240</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">241</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">242</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">243</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">244</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">245</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">246</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">247</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">248</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">249</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">250</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">251</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">252</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">253</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">254</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">255</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">256</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">257</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">258</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">259</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">260</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">261</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">262</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">263</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">264</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">265</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">266</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">268</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">269</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">class</span><span style="color: #BBB"> </span><span style="color: #B06; font-weight: bold">Game</span>(ui<span style="color: #333">.</span>element):
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;**クラス** | ゲーム</span>
 
 <span style="color: #D42">    :ivar nums: 山札(カードのリスト)</span>
@@ -1617,6 +1669,40 @@
     player: Player
     ask_draw: <span style="color: #007020">bool</span>
     message: <span style="color: #007020">str</span>
+
+    <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>):
+<span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;CSSの設定&quot;&quot;&quot;</span>
+        <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
+        ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">&quot;&quot;&quot;</span>
+<span style="background-color: #FFF0F0">            .card {</span>
+<span style="background-color: #FFF0F0">                width: 68px;</span>
+<span style="background-color: #FFF0F0">                height: 112px;</span>
+<span style="background-color: #FFF0F0">                perspective: 1000px;</span>
+<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">            .face {</span>
+<span style="background-color: #FFF0F0">                position: absolute;</span>
+<span style="background-color: #FFF0F0">                width: 100%;</span>
+<span style="background-color: #FFF0F0">                height: 100%;</span>
+<span style="background-color: #FFF0F0">                display: flex;</span>
+<span style="background-color: #FFF0F0">                justify-content: center;</span>
+<span style="background-color: #FFF0F0">                align-items: center;</span>
+<span style="background-color: #FFF0F0">                font-size: 8em;</span>
+<span style="background-color: #FFF0F0">                backface-visibility: hidden;</span>
+<span style="background-color: #FFF0F0">                transition: transform 0.6s;</span>
+<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">            .back {</span>
+<span style="background-color: #FFF0F0">                transform: rotateY(180deg);</span>
+<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">            .card.opened .front {</span>
+<span style="background-color: #FFF0F0">                transform: rotateY(180deg);</span>
+<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">            .card.opened .back {</span>
+<span style="background-color: #FFF0F0">                transform: rotateY(0);</span>
+<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">            .no-select {</span>
+<span style="background-color: #FFF0F0">                user-select: none;</span>
+<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">        &quot;&quot;&quot;</span>)
 
     <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">start</span>(<span style="color: #007020">self</span>, seed: <span style="color: #007020">int</span> <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>, <span style="color: #333">*</span>, nums: <span style="color: #007020">list</span>[<span style="color: #007020">int</span>] <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;新規ゲーム</span>
@@ -1689,6 +1775,92 @@
 <div class="doc doc-object doc-function">
 
 
+<h3 id="src.nicegui_blackjack.Game.__init__" class="doc doc-heading">
+            <code class=" language-python"><span style="color: #06B; font-weight: bold">__init__</span>()</code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>CSSの設定</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">183</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">184</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">185</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">186</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">187</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">188</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">189</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">190</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">191</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">192</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">193</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">194</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">195</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">196</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">197</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">198</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">199</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">200</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">201</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">202</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">203</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">204</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">205</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">206</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">207</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">208</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">209</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">210</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">211</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">212</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">213</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">214</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">215</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>):
+<span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;CSSの設定&quot;&quot;&quot;</span>
+    <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
+    ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">&quot;&quot;&quot;</span>
+<span style="background-color: #FFF0F0">        .card {</span>
+<span style="background-color: #FFF0F0">            width: 68px;</span>
+<span style="background-color: #FFF0F0">            height: 112px;</span>
+<span style="background-color: #FFF0F0">            perspective: 1000px;</span>
+<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">        .face {</span>
+<span style="background-color: #FFF0F0">            position: absolute;</span>
+<span style="background-color: #FFF0F0">            width: 100%;</span>
+<span style="background-color: #FFF0F0">            height: 100%;</span>
+<span style="background-color: #FFF0F0">            display: flex;</span>
+<span style="background-color: #FFF0F0">            justify-content: center;</span>
+<span style="background-color: #FFF0F0">            align-items: center;</span>
+<span style="background-color: #FFF0F0">            font-size: 8em;</span>
+<span style="background-color: #FFF0F0">            backface-visibility: hidden;</span>
+<span style="background-color: #FFF0F0">            transition: transform 0.6s;</span>
+<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">        .back {</span>
+<span style="background-color: #FFF0F0">            transform: rotateY(180deg);</span>
+<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">        .card.opened .front {</span>
+<span style="background-color: #FFF0F0">            transform: rotateY(180deg);</span>
+<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">        .card.opened .back {</span>
+<span style="background-color: #FFF0F0">            transform: rotateY(0);</span>
+<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">        .no-select {</span>
+<span style="background-color: #FFF0F0">            user-select: none;</span>
+<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">    &quot;&quot;&quot;</span>)
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
 <h3 id="src.nicegui_blackjack.Game.change_ask" class="doc doc-heading">
             <code class=" language-python">change_ask(<span style="color: #333">*</span>, ask_draw, message<span style="color: #333">=</span><span style="background-color: #FFF0F0">&#39;Click your card.&#39;</span>)</code>
 
@@ -1701,10 +1873,10 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">210</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">211</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">212</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">213</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">change_ask</span>(<span style="color: #007020">self</span>, <span style="color: #333">*</span>, ask_draw: <span style="color: #007020">bool</span>, message: <span style="color: #007020">str</span> <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;Click your card.&quot;</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">244</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">245</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">246</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">247</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">change_ask</span>(<span style="color: #007020">self</span>, <span style="color: #333">*</span>, ask_draw: <span style="color: #007020">bool</span>, message: <span style="color: #007020">str</span> <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;Click your card.&quot;</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;プレイヤーにカードを引くか尋ねるように設定&quot;&quot;&quot;</span>
     <span style="color: #007020">self</span><span style="color: #333">.</span>ask_draw <span style="color: #333">=</span> ask_draw
     <span style="color: #007020">self</span><span style="color: #333">.</span>message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;Draw card?&quot;</span> <span style="color: #080; font-weight: bold">if</span> ask_draw <span style="color: #080; font-weight: bold">else</span> message
@@ -1733,18 +1905,18 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">224</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">225</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">226</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">227</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">228</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">229</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">230</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">231</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">232</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">233</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">234</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">235</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">dealer_turn</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">258</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">259</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">260</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">261</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">262</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">263</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">264</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">265</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">266</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">268</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">269</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">dealer_turn</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;ディーラーの処理&quot;&quot;&quot;</span>
     message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;You loss.&quot;</span>
     player_point <span style="color: #333">=</span> <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>point()
@@ -1777,10 +1949,10 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">219</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">220</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">221</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">222</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">player_turn</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">253</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">254</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">255</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">256</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">player_turn</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;プレイヤーが山札から裏のままカードを引く&quot;&quot;&quot;</span>
     <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>draw(<span style="color: #007020">self</span>)
     <span style="color: #007020">self</span><span style="color: #333">.</span>change_ask(ask_draw<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>)
@@ -1805,9 +1977,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">215</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">216</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">217</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">pop</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #007020">int</span>:
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">249</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">250</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">251</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">pop</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #007020">int</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;山札から一枚取る&quot;&quot;&quot;</span>
     <span style="color: #080; font-weight: bold">return</span> <span style="color: #007020">self</span><span style="color: #333">.</span>nums<span style="color: #333">.</span>pop()
 </code></pre></div></td></tr></table></div>
@@ -1878,32 +2050,32 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">183</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">184</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">185</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">186</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">187</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">188</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">189</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">190</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">191</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">192</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">193</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">194</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">195</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">196</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">197</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">198</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">199</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">200</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">201</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">202</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">203</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">204</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">205</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">206</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">207</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">208</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">start</span>(<span style="color: #007020">self</span>, seed: <span style="color: #007020">int</span> <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>, <span style="color: #333">*</span>, nums: <span style="color: #007020">list</span>[<span style="color: #007020">int</span>] <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">217</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">218</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">219</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">220</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">221</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">222</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">223</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">224</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">225</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">226</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">227</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">228</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">229</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">230</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">231</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">232</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">233</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">234</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">235</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">236</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">237</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">238</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">239</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">240</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">241</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">242</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">start</span>(<span style="color: #007020">self</span>, seed: <span style="color: #007020">int</span> <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>, <span style="color: #333">*</span>, nums: <span style="color: #007020">list</span>[<span style="color: #007020">int</span>] <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;新規ゲーム</span>
 
 <span style="color: #D42">    :param seed: 乱数シード, defaults to None</span>
@@ -2072,7 +2244,7 @@
 
     <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>, nums: Iterable[<span style="color: #007020">int</span>], <span style="color: #333">*</span>, opened_num: <span style="color: #007020">int</span>, container: ui<span style="color: #333">.</span>element, name: <span style="color: #007020">str</span>):
 <span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;GUIと手札の作成&quot;&quot;&quot;</span>
-        <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="background-color: #FFF0F0">&quot;div&quot;</span>)
+        <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
         <span style="color: #007020">self</span><span style="color: #333">.</span>container <span style="color: #333">=</span> container
         <span style="color: #080; font-weight: bold">with</span> <span style="color: #007020">self</span><span style="color: #333">.</span>container:
             <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>column()<span style="color: #333">.</span>classes(<span style="background-color: #FFF0F0">&quot;mt-6&quot;</span>):
@@ -2163,7 +2335,7 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">103</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">104</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>, nums: Iterable[<span style="color: #007020">int</span>], <span style="color: #333">*</span>, opened_num: <span style="color: #007020">int</span>, container: ui<span style="color: #333">.</span>element, name: <span style="color: #007020">str</span>):
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;GUIと手札の作成&quot;&quot;&quot;</span>
-    <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="background-color: #FFF0F0">&quot;div&quot;</span>)
+    <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
     <span style="color: #007020">self</span><span style="color: #333">.</span>container <span style="color: #333">=</span> container
     <span style="color: #080; font-weight: bold">with</span> <span style="color: #007020">self</span><span style="color: #333">.</span>container:
         <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>column()<span style="color: #333">.</span>classes(<span style="background-color: #FFF0F0">&quot;mt-6&quot;</span>):
@@ -2586,78 +2758,14 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">238</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">239</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">240</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">241</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">242</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">243</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">244</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">245</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">246</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">247</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">248</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">249</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">250</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">251</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">252</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">253</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">254</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">255</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">256</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">257</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">258</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">259</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">260</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">261</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">262</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">263</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">264</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">265</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">266</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">268</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">269</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">270</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">271</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">272</span>
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">272</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">273</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">274</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">main</span>(<span style="color: #333">*</span>, reload<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>, port<span style="color: #333">=</span><span style="color: #00D; font-weight: bold">8105</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">274</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">275</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">276</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">main</span>(<span style="color: #333">*</span>, reload<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>, port<span style="color: #333">=</span><span style="color: #00D; font-weight: bold">8105</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;ゲーム実行&quot;&quot;&quot;</span>
     basicConfig(level<span style="color: #333">=</span>DEBUG, <span style="color: #007020">format</span><span style="color: #333">=</span><span style="background-color: #FFF0F0">&quot;</span><span style="background-color: #EEE">%(message)s</span><span style="background-color: #FFF0F0">&quot;</span>)
-    ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">&quot;&quot;&quot;</span>
-<span style="background-color: #FFF0F0">        .card {</span>
-<span style="background-color: #FFF0F0">            width: 68px;</span>
-<span style="background-color: #FFF0F0">            height: 112px;</span>
-<span style="background-color: #FFF0F0">            perspective: 1000px;</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .face {</span>
-<span style="background-color: #FFF0F0">            position: absolute;</span>
-<span style="background-color: #FFF0F0">            width: 100%;</span>
-<span style="background-color: #FFF0F0">            height: 100%;</span>
-<span style="background-color: #FFF0F0">            display: flex;</span>
-<span style="background-color: #FFF0F0">            justify-content: center;</span>
-<span style="background-color: #FFF0F0">            align-items: center;</span>
-<span style="background-color: #FFF0F0">            font-size: 8em;</span>
-<span style="background-color: #FFF0F0">            backface-visibility: hidden;</span>
-<span style="background-color: #FFF0F0">            transition: transform 0.6s;</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .back {</span>
-<span style="background-color: #FFF0F0">            transform: rotateY(180deg);</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .card.opened .front {</span>
-<span style="background-color: #FFF0F0">            transform: rotateY(180deg);</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .card.opened .back {</span>
-<span style="background-color: #FFF0F0">            transform: rotateY(0);</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .no-select {</span>
-<span style="background-color: #FFF0F0">            user-select: none;</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">    &quot;&quot;&quot;</span>)
-
-    game <span style="color: #333">=</span> Game()
-    game<span style="color: #333">.</span>start()
+    Game()<span style="color: #333">.</span>start()
     ui<span style="color: #333">.</span>run(title<span style="color: #333">=</span><span style="background-color: #FFF0F0">&quot;Blackjack&quot;</span>, reload<span style="color: #333">=</span>reload, port<span style="color: #333">=</span>port)
 </code></pre></div></td></tr></table></div>
             </details>
