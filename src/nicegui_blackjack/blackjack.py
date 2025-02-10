@@ -48,7 +48,7 @@ class Card(ui.element):
 
     def __init__(self, num: int, *, class_: CardClass = "", click: Callable | None = None):
         """表と裏のdivタグを作成(デフォルトは裏を表示)"""
-        super().__init__("div")
+        super().__init__()
         self.num = num
         self.suit = Suit(num // 13)
         self.rank = cast("Rank", num % 13 + 1)
@@ -95,7 +95,7 @@ class Owner(ui.element):
 
     def __init__(self, nums: Iterable[int], *, opened_num: int, container: ui.element, name: str):
         """GUIと手札の作成"""
-        super().__init__("div")
+        super().__init__()
         self.container = container
         with self.container:
             with ui.column().classes("mt-6"):
@@ -180,6 +180,40 @@ class Game(ui.element):
     ask_draw: bool
     message: str
 
+    def __init__(self):
+        """CSSの設定"""
+        super().__init__()
+        ui.add_css("""
+            .card {
+                width: 68px;
+                height: 112px;
+                perspective: 1000px;
+            }
+            .face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 8em;
+                backface-visibility: hidden;
+                transition: transform 0.6s;
+            }
+            .back {
+                transform: rotateY(180deg);
+            }
+            .card.opened .front {
+                transform: rotateY(180deg);
+            }
+            .card.opened .back {
+                transform: rotateY(0);
+            }
+            .no-select {
+                user-select: none;
+            }
+        """)
+
     def start(self, seed: int | None = None, *, nums: list[int] | None = None) -> None:
         """新規ゲーム
 
@@ -238,37 +272,5 @@ class Game(ui.element):
 def main(*, reload=False, port=8105) -> None:
     """ゲーム実行"""
     basicConfig(level=DEBUG, format="%(message)s")
-    ui.add_css("""
-        .card {
-            width: 68px;
-            height: 112px;
-            perspective: 1000px;
-        }
-        .face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 8em;
-            backface-visibility: hidden;
-            transition: transform 0.6s;
-        }
-        .back {
-            transform: rotateY(180deg);
-        }
-        .card.opened .front {
-            transform: rotateY(180deg);
-        }
-        .card.opened .back {
-            transform: rotateY(0);
-        }
-        .no-select {
-            user-select: none;
-        }
-    """)
-
-    game = Game()
-    game.start()
+    Game().start()
     ui.run(title="Blackjack", reload=reload, port=port)

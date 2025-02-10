@@ -9,6 +9,13 @@ import pytest
 from nicegui_blackjack import Game, Owner
 
 
+@pytest.fixture
+def game():
+    """ゲーム"""
+    Owner.wait = 0
+    return Game()
+
+
 @dataclass
 class Case:
     """ケース"""
@@ -28,11 +35,8 @@ class Case:
         Case([12, 5, 11, 0, 8, 4], 1, 20, 21, "You loss."),
     ],
 )
-def test_game_build(case: Case):
+def test_game_build(game: Game, case: Case):
     """ケースのテスト"""
-    Owner.wait = 0
-    with Game() as game:
-        pass
     game.start(nums=list(reversed(case.nums)))
     for _ in range(case.num_draw):
         game.player_turn()
