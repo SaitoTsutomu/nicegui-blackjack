@@ -82,7 +82,7 @@ class Owner(ui.element):
 
     :ivar cards: 手札(カードのリスト)
     :ivar container: カード追加時のUIコンテナ
-    :cvar wait: カードをめくる時間
+    :cvar wait: カードをめくる時間(秒)
     """
 
     cards: list[Card]
@@ -157,7 +157,7 @@ class Player(Owner):
         if self.point() < POINT21:
             game.change_ask(ask_draw=True)
         else:
-            await game.dealer_turn()  # ディーラーの処理
+            await game.stand()  # Stand処理
 
 
 class Game(ui.element):
@@ -179,13 +179,13 @@ class Game(ui.element):
     def __init__(self):
         """CSSの設定"""
         super().__init__()
-        ui.add_css("""
-            .card {
+        ui.add_css(f"""
+            .card {{
                 width: 68px;
                 height: 112px;
                 perspective: 1000px;
-            }
-            .face {
+            }}
+            .face {{
                 position: absolute;
                 width: 100%;
                 height: 100%;
@@ -194,20 +194,20 @@ class Game(ui.element):
                 align-items: center;
                 font-size: 8em;
                 backface-visibility: hidden;
-                transition: transform 0.6s;
-            }
-            .back {
+                transition: transform {Owner.wait}s;
+            }}
+            .back {{
                 transform: rotateY(180deg);
-            }
-            .card.opened .front {
+            }}
+            .card.opened .front {{
                 transform: rotateY(180deg);
-            }
-            .card.opened .back {
+            }}
+            .card.opened .back {{
                 transform: rotateY(0);
-            }
-            .no-select {
+            }}
+            .no-select {{
                 user-select: none;
-            }
+            }}
         """)
 
     def start(self, seed: Any = None, *, nums: list[int] | None = None) -> None:
@@ -237,8 +237,8 @@ class Game(ui.element):
                 with ui.row():
                     ui.label().bind_text(self, "message").classes("text-2xl font-bold")
                     with ui.row().bind_visibility_from(self, "ask_draw"):
-                        ui.button("Yes", on_click=lambda: self.player.act(self))
-                        ui.button("No", on_click=self.dealer_turn)
+                        ui.button("Hit", on_click=self.hit)
+                        ui.button("Stand", on_click=self.stand)
                 with ui.row():
                     self._seed = ""
                     ui.button("New Game", on_click=lambda: self.start(self._seed or None)).classes("mt-4")
@@ -253,8 +253,12 @@ class Game(ui.element):
         """山札から一枚取る"""
         return self.nums.pop()
 
-    async def dealer_turn(self) -> None:
-        """ディーラーの処理"""
+    async def hit(self) -> None:
+        """Hit処理"""
+        await self.player.act(self)
+
+    async def stand(self) -> None:
+        """Stand処理"""
         message = "You loss."
         player_point = self.player.point()
         if player_point <= POINT21:

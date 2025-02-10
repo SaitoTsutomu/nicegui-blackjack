@@ -16,7 +16,7 @@ description = "Blackjack game on NiceGUI"
 name = "nicegui-blackjack"
 readme = "README.md"
 requires-python = ">=3.12"
-version = "0.2.3"
+version = "0.2.4"
 
 [project.urls]
 docs = "https://saitotsutomu.github.io/nicegui-blackjack/"
