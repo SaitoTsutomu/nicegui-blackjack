@@ -20,7 +20,7 @@ def game():
 class Case:
     """ケース"""
 
-    nums: list[int]  # Dealerに2枚、Playerに2枚、Playerにnum_player_turn枚、以降Dealer
+    nums: list[int]  # Dealerに2枚、Playerに2枚、Playerにnum_draw枚、以降Dealer
     num_draw: int  # Playerがdrawする数
     player_point: int  # 結果(Player得点)
     dealer_point: int  # 結果(Dealer得点)
@@ -39,7 +39,6 @@ def test_game_build(game: Game, case: Case):
     """ケースのテスト"""
     game.start(nums=list(reversed(case.nums)))
     for _ in range(case.num_draw):
-        game.player_turn()
         asyncio.run(game.player.act(game))
     asyncio.run(game.dealer_turn())
     assert game.player.point() == case.player_point, f"{game.player}"

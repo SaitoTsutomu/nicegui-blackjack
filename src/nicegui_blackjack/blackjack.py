@@ -3,7 +3,7 @@
 import asyncio
 import random
 import secrets
-from collections.abc import Callable, Iterable
+from collections.abc import Iterable
 from enum import IntEnum
 from logging import DEBUG, basicConfig, getLogger
 from typing import Any, ClassVar, Final, Literal, cast
@@ -45,7 +45,7 @@ class Card(ui.element):
     rank: Rank
     suit: Suit
 
-    def __init__(self, num: int, *, opened: bool = False, click: Callable | None = None):
+    def __init__(self, num: int, *, opened: bool = False):
         """表と裏のdivタグを作成(デフォルトは裏を表示)"""
         super().__init__()
         self.num = num
@@ -54,7 +54,7 @@ class Card(ui.element):
         char = chr(CARD_CODE + self.suit * 16 + self.rank + (self.rank > 11))  # noqa: PLR2004
         color = "black" if self.suit in {Suit.Spade, Suit.Club} else "red-10"
         # GUI作成
-        with self.classes(f"card{' opened' * opened}").on("click", click):
+        with self.classes(f"card{' opened' * opened}"):
             ui.label(chr(CARD_CODE)).classes("face front text-blue-10")
             ui.label(char).classes(f"face back text-{color}")
 
@@ -99,10 +99,10 @@ class Owner(ui.element):
                 ui.label().bind_text_from(self, "message").classes("text-2xl pl-6")
             self.cards = [Card(num, opened=i < opened_num) for i, num in enumerate(nums)]
 
-    def add_card(self, num: int, **kwargs) -> None:
+    def add_card(self, num: int, *, opened: bool = False) -> None:
         """手札に一枚加える"""
         with self.container:
-            self.cards.append(Card(num, **kwargs))
+            self.cards.append(Card(num, opened=opened))
 
     def point(self) -> int:
         """手札の合計得点"""
@@ -147,16 +147,16 @@ class Dealer(Owner):
 class Player(Owner):
     """**クラス** | プレイヤー"""
 
-    def draw(self, game: "Game") -> None:
-        """山札から裏のままカードを引く"""
-        self.add_card(game.pop(), click=lambda: self.act(game))
-
     async def act(self, game: "Game") -> None:
         """プレイヤーの処理"""
+        game.change_ask(ask_draw=False, message="Player' turn")
+        self.add_card(game.pop())
+        await asyncio.sleep(self.wait / 3)
         self.cards[-1].open()  # 最後のカードを表にする
         await asyncio.sleep(self.wait)
-        game.change_ask(ask_draw=True)
-        if self.point() >= POINT21:
+        if self.point() < POINT21:
+            game.change_ask(ask_draw=True)
+        else:
             await game.dealer_turn()  # ディーラーの処理
 
 
@@ -236,8 +236,9 @@ class Game(ui.element):
                 self.player = Player((self.pop(), self.pop()), opened_num=2, container=ui.row(), name="Player")
                 with ui.row():
                     ui.label().bind_text(self, "message").classes("text-2xl font-bold")
-                    ui.button("Yes", on_click=self.player_turn).bind_visibility_from(self, "ask_draw")
-                    ui.button("No", on_click=self.dealer_turn).bind_visibility_from(self, "ask_draw")
+                    with ui.row().bind_visibility_from(self, "ask_draw"):
+                        ui.button("Yes", on_click=lambda: self.player.act(self))
+                        ui.button("No", on_click=self.dealer_turn)
                 with ui.row():
                     self._seed = ""
                     ui.button("New Game", on_click=lambda: self.start(self._seed or None)).classes("mt-4")
@@ -251,11 +252,6 @@ class Game(ui.element):
     def pop(self) -> int:
         """山札から一枚取る"""
         return self.nums.pop()
-
-    def player_turn(self) -> None:
-        """プレイヤーが山札から裏のままカードを引く"""
-        self.player.draw(self)
-        self.change_ask(ask_draw=False)
 
     async def dealer_turn(self) -> None:
         """ディーラーの処理"""
