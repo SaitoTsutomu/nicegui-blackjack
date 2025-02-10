@@ -381,9 +381,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#src.nicegui_blackjack.Game.dealer_turn" class="md-nav__link">
+  <a href="#src.nicegui_blackjack.Game.hit" class="md-nav__link">
     <span class="md-ellipsis">
-      dealer_turn
+      hit
     </span>
   </a>
   
@@ -393,6 +393,15 @@
   <a href="#src.nicegui_blackjack.Game.pop" class="md-nav__link">
     <span class="md-ellipsis">
       pop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.nicegui_blackjack.Game.stand" class="md-nav__link">
+    <span class="md-ellipsis">
+      stand
     </span>
   </a>
   
@@ -712,9 +721,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#src.nicegui_blackjack.Game.dealer_turn" class="md-nav__link">
+  <a href="#src.nicegui_blackjack.Game.hit" class="md-nav__link">
     <span class="md-ellipsis">
-      dealer_turn
+      hit
     </span>
   </a>
   
@@ -724,6 +733,15 @@
   <a href="#src.nicegui_blackjack.Game.pop" class="md-nav__link">
     <span class="md-ellipsis">
       pop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.nicegui_blackjack.Game.stand" class="md-nav__link">
+    <span class="md-ellipsis">
+      stand
     </span>
   </a>
   
@@ -1608,7 +1626,11 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">264</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">265</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">266</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">class</span><span style="color: #BBB"> </span><span style="color: #B06; font-weight: bold">Game</span>(ui<span style="color: #333">.</span>element):
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">268</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">269</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">270</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">271</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">class</span><span style="color: #BBB"> </span><span style="color: #B06; font-weight: bold">Game</span>(ui<span style="color: #333">.</span>element):
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;**クラス** | ゲーム</span>
 
 <span style="color: #D42">    :ivar nums: 山札(カードのリスト)</span>
@@ -1627,13 +1649,13 @@
     <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>):
 <span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;CSSの設定&quot;&quot;&quot;</span>
         <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
-        ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">&quot;&quot;&quot;</span>
-<span style="background-color: #FFF0F0">            .card {</span>
+        ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">f&quot;&quot;&quot;</span>
+<span style="background-color: #FFF0F0">            .card </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">                width: 68px;</span>
 <span style="background-color: #FFF0F0">                height: 112px;</span>
 <span style="background-color: #FFF0F0">                perspective: 1000px;</span>
-<span style="background-color: #FFF0F0">            }</span>
-<span style="background-color: #FFF0F0">            .face {</span>
+<span style="background-color: #FFF0F0">            </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">            .face </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">                position: absolute;</span>
 <span style="background-color: #FFF0F0">                width: 100%;</span>
 <span style="background-color: #FFF0F0">                height: 100%;</span>
@@ -1642,20 +1664,20 @@
 <span style="background-color: #FFF0F0">                align-items: center;</span>
 <span style="background-color: #FFF0F0">                font-size: 8em;</span>
 <span style="background-color: #FFF0F0">                backface-visibility: hidden;</span>
-<span style="background-color: #FFF0F0">                transition: transform 0.6s;</span>
-<span style="background-color: #FFF0F0">            }</span>
-<span style="background-color: #FFF0F0">            .back {</span>
+<span style="background-color: #FFF0F0">                transition: transform </span><span style="background-color: #EEE">{</span>Owner<span style="color: #333">.</span>wait<span style="background-color: #EEE">}</span><span style="background-color: #FFF0F0">s;</span>
+<span style="background-color: #FFF0F0">            </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">            .back </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">                transform: rotateY(180deg);</span>
-<span style="background-color: #FFF0F0">            }</span>
-<span style="background-color: #FFF0F0">            .card.opened .front {</span>
+<span style="background-color: #FFF0F0">            </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">            .card.opened .front </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">                transform: rotateY(180deg);</span>
-<span style="background-color: #FFF0F0">            }</span>
-<span style="background-color: #FFF0F0">            .card.opened .back {</span>
+<span style="background-color: #FFF0F0">            </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">            .card.opened .back </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">                transform: rotateY(0);</span>
-<span style="background-color: #FFF0F0">            }</span>
-<span style="background-color: #FFF0F0">            .no-select {</span>
+<span style="background-color: #FFF0F0">            </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">            .no-select </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">                user-select: none;</span>
-<span style="background-color: #FFF0F0">            }</span>
+<span style="background-color: #FFF0F0">            </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
 <span style="background-color: #FFF0F0">        &quot;&quot;&quot;</span>)
 
     <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">start</span>(<span style="color: #007020">self</span>, seed: Any <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>, <span style="color: #333">*</span>, nums: <span style="color: #007020">list</span>[<span style="color: #007020">int</span>] <span style="color: #333">|</span> <span style="color: #080; font-weight: bold">None</span> <span style="color: #333">=</span> <span style="color: #080; font-weight: bold">None</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
@@ -1685,8 +1707,8 @@
                 <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>row():
                     ui<span style="color: #333">.</span>label()<span style="color: #333">.</span>bind_text(<span style="color: #007020">self</span>, <span style="background-color: #FFF0F0">&quot;message&quot;</span>)<span style="color: #333">.</span>classes(<span style="background-color: #FFF0F0">&quot;text-2xl font-bold&quot;</span>)
                     <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>row()<span style="color: #333">.</span>bind_visibility_from(<span style="color: #007020">self</span>, <span style="background-color: #FFF0F0">&quot;ask_draw&quot;</span>):
-                        ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;Yes&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #080; font-weight: bold">lambda</span>: <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>act(<span style="color: #007020">self</span>))
-                        ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;No&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #007020">self</span><span style="color: #333">.</span>dealer_turn)
+                        ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;Hit&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #007020">self</span><span style="color: #333">.</span>hit)
+                        ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;Stand&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #007020">self</span><span style="color: #333">.</span>stand)
                 <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>row():
                     <span style="color: #007020">self</span><span style="color: #333">.</span>_seed <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;&quot;</span>
                     ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;New Game&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #080; font-weight: bold">lambda</span>: <span style="color: #007020">self</span><span style="color: #333">.</span>start(<span style="color: #007020">self</span><span style="color: #333">.</span>_seed <span style="color: #000; font-weight: bold">or</span> <span style="color: #080; font-weight: bold">None</span>))<span style="color: #333">.</span>classes(<span style="background-color: #FFF0F0">&quot;mt-4&quot;</span>)
@@ -1701,8 +1723,12 @@
 <span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;山札から一枚取る&quot;&quot;&quot;</span>
         <span style="color: #080; font-weight: bold">return</span> <span style="color: #007020">self</span><span style="color: #333">.</span>nums<span style="color: #333">.</span>pop()
 
-    <span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">dealer_turn</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
-<span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;ディーラーの処理&quot;&quot;&quot;</span>
+    <span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">hit</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+<span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;Hit処理&quot;&quot;&quot;</span>
+        <span style="color: #080; font-weight: bold">await</span> <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>act(<span style="color: #007020">self</span>)
+
+    <span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">stand</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+<span style="color: #BBB">        </span><span style="color: #D42">&quot;&quot;&quot;Stand処理&quot;&quot;&quot;</span>
         message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;You loss.&quot;</span>
         player_point <span style="color: #333">=</span> <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>point()
         <span style="color: #080; font-weight: bold">if</span> player_point <span style="color: #333">&lt;=</span> POINT21:
@@ -1778,13 +1804,13 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">211</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">__init__</span>(<span style="color: #007020">self</span>):
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;CSSの設定&quot;&quot;&quot;</span>
     <span style="color: #007020">super</span>()<span style="color: #333">.</span><span style="color: #06B; font-weight: bold">__init__</span>()
-    ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">&quot;&quot;&quot;</span>
-<span style="background-color: #FFF0F0">        .card {</span>
+    ui<span style="color: #333">.</span>add_css(<span style="background-color: #FFF0F0">f&quot;&quot;&quot;</span>
+<span style="background-color: #FFF0F0">        .card </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">            width: 68px;</span>
 <span style="background-color: #FFF0F0">            height: 112px;</span>
 <span style="background-color: #FFF0F0">            perspective: 1000px;</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .face {</span>
+<span style="background-color: #FFF0F0">        </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">        .face </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">            position: absolute;</span>
 <span style="background-color: #FFF0F0">            width: 100%;</span>
 <span style="background-color: #FFF0F0">            height: 100%;</span>
@@ -1793,20 +1819,20 @@
 <span style="background-color: #FFF0F0">            align-items: center;</span>
 <span style="background-color: #FFF0F0">            font-size: 8em;</span>
 <span style="background-color: #FFF0F0">            backface-visibility: hidden;</span>
-<span style="background-color: #FFF0F0">            transition: transform 0.6s;</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .back {</span>
+<span style="background-color: #FFF0F0">            transition: transform </span><span style="background-color: #EEE">{</span>Owner<span style="color: #333">.</span>wait<span style="background-color: #EEE">}</span><span style="background-color: #FFF0F0">s;</span>
+<span style="background-color: #FFF0F0">        </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">        .back </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">            transform: rotateY(180deg);</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .card.opened .front {</span>
+<span style="background-color: #FFF0F0">        </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">        .card.opened .front </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">            transform: rotateY(180deg);</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .card.opened .back {</span>
+<span style="background-color: #FFF0F0">        </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">        .card.opened .back </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">            transform: rotateY(0);</span>
-<span style="background-color: #FFF0F0">        }</span>
-<span style="background-color: #FFF0F0">        .no-select {</span>
+<span style="background-color: #FFF0F0">        </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
+<span style="background-color: #FFF0F0">        .no-select </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">{{</span>
 <span style="background-color: #FFF0F0">            user-select: none;</span>
-<span style="background-color: #FFF0F0">        }</span>
+<span style="background-color: #FFF0F0">        </span><span style="color: #666; font-weight: bold; background-color: #FFF0F0">}}</span>
 <span style="background-color: #FFF0F0">    &quot;&quot;&quot;</span>)
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1845,8 +1871,8 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="src.nicegui_blackjack.Game.dealer_turn" class="doc doc-heading">
-            <code class=" language-python">dealer_turn()</code>
+<h3 id="src.nicegui_blackjack.Game.hit" class="doc doc-heading">
+            <code class=" language-python">hit()</code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -1857,33 +1883,15 @@
 
     <div class="doc doc-contents ">
 
-        <p>ディーラーの処理</p>
+        <p>Hit処理</p>
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
               <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">256</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">257</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">258</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">259</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">260</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">261</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">262</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">263</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">264</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">265</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">266</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">dealer_turn</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
-<span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;ディーラーの処理&quot;&quot;&quot;</span>
-    message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;You loss.&quot;</span>
-    player_point <span style="color: #333">=</span> <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>point()
-    <span style="color: #080; font-weight: bold">if</span> player_point <span style="color: #333">&lt;=</span> POINT21:
-        <span style="color: #080; font-weight: bold">await</span> <span style="color: #007020">self</span><span style="color: #333">.</span>dealer<span style="color: #333">.</span>act(<span style="color: #007020">self</span>)
-        dealer_point <span style="color: #333">=</span> <span style="color: #007020">self</span><span style="color: #333">.</span>dealer<span style="color: #333">.</span>point()
-        <span style="color: #080; font-weight: bold">if</span> player_point <span style="color: #333">==</span> dealer_point:
-            message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;Draw.&quot;</span>
-        <span style="color: #080; font-weight: bold">elif</span> dealer_point <span style="color: #333">&gt;</span> POINT21 <span style="color: #000; font-weight: bold">or</span> dealer_point <span style="color: #333">&lt;</span> player_point:
-            message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;You win.&quot;</span>
-    <span style="color: #007020">self</span><span style="color: #333">.</span>change_ask(ask_draw<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>, message<span style="color: #333">=</span>message)
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">258</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">hit</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+<span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;Hit処理&quot;&quot;&quot;</span>
+    <span style="color: #080; font-weight: bold">await</span> <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>act(<span style="color: #007020">self</span>)
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1910,6 +1918,54 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">254</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">pop</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #007020">int</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;山札から一枚取る&quot;&quot;&quot;</span>
     <span style="color: #080; font-weight: bold">return</span> <span style="color: #007020">self</span><span style="color: #333">.</span>nums<span style="color: #333">.</span>pop()
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.nicegui_blackjack.Game.stand" class="doc doc-heading">
+            <code class=" language-python">stand()</code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Stand処理</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">260</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">261</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">262</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">263</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">264</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">265</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">266</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">267</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">268</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">269</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">270</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">271</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">async</span> <span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">stand</span>(<span style="color: #007020">self</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+<span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;Stand処理&quot;&quot;&quot;</span>
+    message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;You loss.&quot;</span>
+    player_point <span style="color: #333">=</span> <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>point()
+    <span style="color: #080; font-weight: bold">if</span> player_point <span style="color: #333">&lt;=</span> POINT21:
+        <span style="color: #080; font-weight: bold">await</span> <span style="color: #007020">self</span><span style="color: #333">.</span>dealer<span style="color: #333">.</span>act(<span style="color: #007020">self</span>)
+        dealer_point <span style="color: #333">=</span> <span style="color: #007020">self</span><span style="color: #333">.</span>dealer<span style="color: #333">.</span>point()
+        <span style="color: #080; font-weight: bold">if</span> player_point <span style="color: #333">==</span> dealer_point:
+            message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;Draw.&quot;</span>
+        <span style="color: #080; font-weight: bold">elif</span> dealer_point <span style="color: #333">&gt;</span> POINT21 <span style="color: #000; font-weight: bold">or</span> dealer_point <span style="color: #333">&lt;</span> player_point:
+            message <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;You win.&quot;</span>
+    <span style="color: #007020">self</span><span style="color: #333">.</span>change_ask(ask_draw<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>, message<span style="color: #333">=</span>message)
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2037,8 +2093,8 @@
             <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>row():
                 ui<span style="color: #333">.</span>label()<span style="color: #333">.</span>bind_text(<span style="color: #007020">self</span>, <span style="background-color: #FFF0F0">&quot;message&quot;</span>)<span style="color: #333">.</span>classes(<span style="background-color: #FFF0F0">&quot;text-2xl font-bold&quot;</span>)
                 <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>row()<span style="color: #333">.</span>bind_visibility_from(<span style="color: #007020">self</span>, <span style="background-color: #FFF0F0">&quot;ask_draw&quot;</span>):
-                    ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;Yes&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #080; font-weight: bold">lambda</span>: <span style="color: #007020">self</span><span style="color: #333">.</span>player<span style="color: #333">.</span>act(<span style="color: #007020">self</span>))
-                    ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;No&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #007020">self</span><span style="color: #333">.</span>dealer_turn)
+                    ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;Hit&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #007020">self</span><span style="color: #333">.</span>hit)
+                    ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;Stand&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #007020">self</span><span style="color: #333">.</span>stand)
             <span style="color: #080; font-weight: bold">with</span> ui<span style="color: #333">.</span>row():
                 <span style="color: #007020">self</span><span style="color: #333">.</span>_seed <span style="color: #333">=</span> <span style="background-color: #FFF0F0">&quot;&quot;</span>
                 ui<span style="color: #333">.</span>button(<span style="background-color: #FFF0F0">&quot;New Game&quot;</span>, on_click<span style="color: #333">=</span><span style="color: #080; font-weight: bold">lambda</span>: <span style="color: #007020">self</span><span style="color: #333">.</span>start(<span style="color: #007020">self</span><span style="color: #333">.</span>_seed <span style="color: #000; font-weight: bold">or</span> <span style="color: #080; font-weight: bold">None</span>))<span style="color: #333">.</span>classes(<span style="background-color: #FFF0F0">&quot;mt-4&quot;</span>)
@@ -2115,7 +2171,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>カードをめくる時間</p>
+                <p>カードをめくる時間(秒)</p>
               </div>
             </td>
           </tr>
@@ -2177,7 +2233,7 @@
 
 <span style="color: #D42">    :ivar cards: 手札(カードのリスト)</span>
 <span style="color: #D42">    :ivar container: カード追加時のUIコンテナ</span>
-<span style="color: #D42">    :cvar wait: カードをめくる時間</span>
+<span style="color: #D42">    :cvar wait: カードをめくる時間(秒)</span>
 <span style="color: #D42">    &quot;&quot;&quot;</span>
 
     cards: <span style="color: #007020">list</span>[Card]
@@ -2439,7 +2495,7 @@
         <span style="color: #080; font-weight: bold">if</span> <span style="color: #007020">self</span><span style="color: #333">.</span>point() <span style="color: #333">&lt;</span> POINT21:
             game<span style="color: #333">.</span>change_ask(ask_draw<span style="color: #333">=</span><span style="color: #080; font-weight: bold">True</span>)
         <span style="color: #080; font-weight: bold">else</span>:
-            <span style="color: #080; font-weight: bold">await</span> game<span style="color: #333">.</span>dealer_turn()  <span style="color: #888"># ディーラーの処理</span>
+            <span style="color: #080; font-weight: bold">await</span> game<span style="color: #333">.</span>stand()  <span style="color: #888"># Stand処理</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -2494,7 +2550,7 @@
     <span style="color: #080; font-weight: bold">if</span> <span style="color: #007020">self</span><span style="color: #333">.</span>point() <span style="color: #333">&lt;</span> POINT21:
         game<span style="color: #333">.</span>change_ask(ask_draw<span style="color: #333">=</span><span style="color: #080; font-weight: bold">True</span>)
     <span style="color: #080; font-weight: bold">else</span>:
-        <span style="color: #080; font-weight: bold">await</span> game<span style="color: #333">.</span>dealer_turn()  <span style="color: #888"># ディーラーの処理</span>
+        <span style="color: #080; font-weight: bold">await</span> game<span style="color: #333">.</span>stand()  <span style="color: #888"># Stand処理</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2682,11 +2738,11 @@
 
             <details class="quote">
               <summary>Source code in <code>src/nicegui_blackjack/blackjack.py</code></summary>
-              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">270</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">271</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">272</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">273</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">274</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">main</span>(<span style="color: #333">*</span>, reload<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>, port<span style="color: #333">=</span><span style="color: #00D; font-weight: bold">8105</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
+              <div class="codehilite" style="background: #ffffff"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">274</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">275</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">276</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">277</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">278</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-weight: bold">def</span><span style="color: #BBB"> </span><span style="color: #06B; font-weight: bold">main</span>(<span style="color: #333">*</span>, reload<span style="color: #333">=</span><span style="color: #080; font-weight: bold">False</span>, port<span style="color: #333">=</span><span style="color: #00D; font-weight: bold">8105</span>) <span style="color: #333">-&gt;</span> <span style="color: #080; font-weight: bold">None</span>:
 <span style="color: #BBB">    </span><span style="color: #D42">&quot;&quot;&quot;ゲーム実行&quot;&quot;&quot;</span>
     basicConfig(level<span style="color: #333">=</span>DEBUG, <span style="color: #007020">format</span><span style="color: #333">=</span><span style="background-color: #FFF0F0">&quot;</span><span style="background-color: #EEE">%(message)s</span><span style="background-color: #FFF0F0">&quot;</span>)
     Game()<span style="color: #333">.</span>start()
