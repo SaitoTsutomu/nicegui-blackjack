@@ -6,19 +6,18 @@ from dataclasses import dataclass
 
 import pytest
 
-from nicegui_blackjack import Game, Owner
+from nicegui_blackjack import Game
 
 
 @pytest.fixture
 def game():
     """ゲーム"""
-    Owner.wait = 0
-    return Game()
+    return Game(wait=0)
 
 
 @dataclass
 class Case:
-    """ケース"""
+    """ケース(1回の勝負)"""
 
     nums: list[int]  # Dealerに2枚、Playerに2枚、Playerにnum_hit枚、以降Dealer
     num_hit: int  # Playerがdrawする数
@@ -35,8 +34,8 @@ class Case:
         Case([12, 5, 11, 0, 8, 4], 1, 20, 21, "You loss."),
     ],
 )
-def test_game_build(game: Game, case: Case):
-    """ケースのテスト"""
+def test_game_case(game: Game, case: Case):
+    """ゲームのテスト"""
     game.start(nums=list(reversed(case.nums)))
     for _ in range(case.num_hit):
         asyncio.run(game.hit())

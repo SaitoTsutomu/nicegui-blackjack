@@ -6,7 +6,7 @@ import secrets
 from collections.abc import Iterable
 from enum import IntEnum
 from logging import DEBUG, basicConfig, getLogger
-from typing import Any, ClassVar, Final, Literal, cast
+from typing import Any, Final, Literal, cast
 
 from nicegui import ui
 
@@ -82,17 +82,15 @@ class Owner(ui.element):
 
     :ivar cards: 手札(カードのリスト)
     :ivar container: カード追加時のUIコンテナ
-    :cvar wait: カードをめくる時間(秒)
     """
 
     cards: list[Card]
     container: ui.element
-    wait: ClassVar[float] = 0.6
 
-    def __init__(self, nums: Iterable[int], *, opened_num: int, container: ui.element, name: str):
+    def __init__(self, nums: Iterable[int], *, opened_num: int, name: str):
         """GUIと手札の作成"""
         super().__init__()
-        self.container = container
+        self.container = ui.row()
         with self.container:
             with ui.column().classes("mt-6"):
                 ui.label(f"{name}'s cards").classes("text-2xl")
@@ -133,14 +131,14 @@ class Dealer(Owner):
 
     async def act(self, game: "Game") -> None:
         """ディーラーの手番の処理"""
-        game.change_ask(ask_draw=False, message="Dealer's turn")
+        game.set_props(ask_visible=False, message="Dealer's turn")
         logger.debug("Dealer.act: Point %s", self.point())
         while self.point() < self.LOWER:
             if self.cards[1].opened:  # 2枚目がopenedなら3枚目以降を追加
                 self.add_card(game.pop())
-                await asyncio.sleep(self.wait / 3)
+                await game.sleep(is_bit=True)
             self.cards[-1].open()
-            await asyncio.sleep(self.wait)
+            await game.sleep()
             logger.debug("Dealer.act: Opened %s, Point %s", self.cards[-1], self.point())
 
 
@@ -149,13 +147,13 @@ class Player(Owner):
 
     async def act(self, game: "Game") -> None:
         """プレイヤーの処理"""
-        game.change_ask(ask_draw=False, message="Player' turn")
+        game.set_props(ask_visible=False, message="Player' turn")
         self.add_card(game.pop())
-        await asyncio.sleep(self.wait / 3)
+        await game.sleep(is_bit=True)
         self.cards[-1].open()  # 最後のカードを表にする
-        await asyncio.sleep(self.wait)
+        await game.sleep()
         if self.point() < POINT21:
-            game.change_ask(ask_draw=True)
+            game.set_props(ask_visible=True)
         else:
             await game.stand()  # Stand処理
 
@@ -163,22 +161,25 @@ class Player(Owner):
 class Game(ui.element):
     """**クラス** | ゲーム
 
-    :ivar nums: 山札(カードのリスト)
+    :ivar nums: 山札(カードの数字のリスト)
     :ivar dealer: ディーラー
     :ivar player: プレイヤー
-    :ivar ask_draw: カードを引くボタンを表示するかどうか
+    :ivar ask_visible: カードを引くボタンを表示するかどうか
     :ivar message: メッセージ
+    :ivar wait: カードをめくる時間(秒)
     """
 
     nums: list[int]
     dealer: Dealer
     player: Player
-    ask_draw: bool
+    ask_visible: bool
     message: str
+    wait: float
 
-    def __init__(self):
+    def __init__(self, *, wait: float = 0.6):
         """CSSの設定"""
         super().__init__()
+        self.wait = wait
         ui.add_css(f"""
             .card {{
                 width: 68px;
@@ -194,7 +195,7 @@ class Game(ui.element):
                 align-items: center;
                 font-size: 8em;
                 backface-visibility: hidden;
-                transition: transform {Owner.wait}s;
+                transition: transform {self.wait}s;
             }}
             .back {{
                 transform: rotateY(180deg);
@@ -226,17 +227,17 @@ class Game(ui.element):
             random.seed(seed)
             logger.debug("Game.start: seed %s", seed)
             random.shuffle(self.nums)
-        self.change_ask(ask_draw=True)
+        self.set_props(ask_visible=True)
         # GUI作成
         self.clear()
         with self, ui.card().classes("no-select"):
             ui.label("Blackjack Game").classes("text-3xl")
             with ui.column():
-                self.dealer = Dealer((self.pop(), self.pop()), opened_num=1, container=ui.row(), name="Dealer")
-                self.player = Player((self.pop(), self.pop()), opened_num=2, container=ui.row(), name="Player")
+                self.dealer = Dealer((self.pop(), self.pop()), opened_num=1, name="Dealer")
+                self.player = Player((self.pop(), self.pop()), opened_num=2, name="Player")
                 with ui.row():
                     ui.label().bind_text(self, "message").classes("text-2xl font-bold")
-                    with ui.row().bind_visibility_from(self, "ask_draw"):
+                    with ui.row().bind_visibility_from(self, "ask_visible"):
                         ui.button("Hit", on_click=self.hit)
                         ui.button("Stand", on_click=self.stand)
                 with ui.row():
@@ -244,13 +245,13 @@ class Game(ui.element):
                     ui.button("New Game", on_click=lambda: self.start(self._seed or None)).classes("mt-4")
                     ui.input(label="Seed").bind_value(self, "_seed")
 
-    def change_ask(self, *, ask_draw: bool, message: str = "Click your card.") -> None:
+    def set_props(self, *, ask_visible: bool, message: str = "Click your card.") -> None:
         """プレイヤーにカードを引くか尋ねるように設定"""
-        self.ask_draw = ask_draw
-        self.message = "Draw card?" if ask_draw else message
+        self.ask_visible = ask_visible
+        self.message = "Draw card?" if ask_visible else message
 
     def pop(self) -> int:
-        """山札から一枚取る"""
+        """山札(数字)から一枚取る"""
         return self.nums.pop()
 
     async def hit(self) -> None:
@@ -268,7 +269,11 @@ class Game(ui.element):
                 message = "Draw."
             elif dealer_point > POINT21 or dealer_point < player_point:
                 message = "You win."
-        self.change_ask(ask_draw=False, message=message)
+        self.set_props(ask_visible=False, message=message)
+
+    async def sleep(self, *, is_bit: bool = False):
+        """カードがめくれる間だけ待つ"""
+        await asyncio.sleep(self.wait * (1 - 0.7 * is_bit))
 
 
 def main(*, reload=False, port=8105) -> None:
