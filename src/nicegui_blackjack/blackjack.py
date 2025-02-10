@@ -2,10 +2,11 @@
 
 import asyncio
 import random
+import secrets
 from collections.abc import Callable, Iterable
 from enum import IntEnum
 from logging import DEBUG, basicConfig, getLogger
-from typing import ClassVar, Final, Literal, cast
+from typing import Any, ClassVar, Final, Literal, cast
 
 from nicegui import ui
 
@@ -30,8 +31,6 @@ class Suit(IntEnum):
 
 # カードの数字
 type Rank = Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-# カードのスタイル
-type CardClass = Literal["", "opened", "hidden"]
 
 
 class Card(ui.element):
@@ -46,7 +45,7 @@ class Card(ui.element):
     rank: Rank
     suit: Suit
 
-    def __init__(self, num: int, *, class_: CardClass = "", click: Callable | None = None):
+    def __init__(self, num: int, *, opened: bool = False, click: Callable | None = None):
         """表と裏のdivタグを作成(デフォルトは裏を表示)"""
         super().__init__()
         self.num = num
@@ -55,7 +54,7 @@ class Card(ui.element):
         char = chr(CARD_CODE + self.suit * 16 + self.rank + (self.rank > 11))  # noqa: PLR2004
         color = "black" if self.suit in {Suit.Spade, Suit.Club} else "red-10"
         # GUI作成
-        with self.classes(f"card {class_}").on("click", click):
+        with self.classes(f"card{' opened' * opened}").on("click", click):
             ui.label(chr(CARD_CODE)).classes("face front text-blue-10")
             ui.label(char).classes(f"face back text-{color}")
 
@@ -74,11 +73,8 @@ class Card(ui.element):
 
     def __str__(self):
         """文字列化"""
-        n = self.rank * 2
-        m = n - 2
-        r = " A 2 3 4 5 6 7 8 910 J Q K"[m:n]
-        s = "(" + "SHDC"[self.suit] + ")"
-        return r + s
+        r = " A 2 3 4 5 6 7 8 910 J Q K"[self.rank * 2 - 2 : self.rank * 2]
+        return r + f"({'SHDC'[self.suit]})"
 
 
 class Owner(ui.element):
@@ -101,12 +97,12 @@ class Owner(ui.element):
             with ui.column().classes("mt-6"):
                 ui.label(f"{name}'s cards").classes("text-2xl")
                 ui.label().bind_text_from(self, "message").classes("text-2xl pl-6")
-            self.cards = [Card(num, class_="opened" if i < opened_num else "") for i, num in enumerate(nums)]
+            self.cards = [Card(num, opened=i < opened_num) for i, num in enumerate(nums)]
 
-    def add_card(self, num: int, *, class_: CardClass = "", click: Callable | None = None) -> None:
+    def add_card(self, num: int, **kwargs) -> None:
         """手札に一枚加える"""
         with self.container:
-            self.cards.append(Card(num, class_=class_, click=click))
+            self.cards.append(Card(num, **kwargs))
 
     def point(self) -> int:
         """手札の合計得点"""
@@ -214,7 +210,7 @@ class Game(ui.element):
             }
         """)
 
-    def start(self, seed: int | None = None, *, nums: list[int] | None = None) -> None:
+    def start(self, seed: Any = None, *, nums: list[int] | None = None) -> None:
         """新規ゲーム
 
         :param seed: 乱数シード, defaults to None
@@ -224,8 +220,11 @@ class Game(ui.element):
             self.nums = nums
         else:
             self.nums = [*range(52)]
-            if seed is not None:
-                random.seed(seed)
+            if isinstance(seed, str) and seed.isdigit():
+                seed = int(seed)
+            seed = secrets.randbelow(1000_000_000) if seed is None else seed
+            random.seed(seed)
+            logger.debug("Game.start: seed %s", seed)
             random.shuffle(self.nums)
         self.change_ask(ask_draw=True)
         # GUI作成
@@ -239,7 +238,10 @@ class Game(ui.element):
                     ui.label().bind_text(self, "message").classes("text-2xl font-bold")
                     ui.button("Yes", on_click=self.player_turn).bind_visibility_from(self, "ask_draw")
                     ui.button("No", on_click=self.dealer_turn).bind_visibility_from(self, "ask_draw")
-                ui.button("New Game", on_click=self.start)
+                with ui.row():
+                    self._seed = ""
+                    ui.button("New Game", on_click=lambda: self.start(self._seed or None)).classes("mt-4")
+                    ui.input(label="Seed").bind_value(self, "_seed")
 
     def change_ask(self, *, ask_draw: bool, message: str = "Click your card.") -> None:
         """プレイヤーにカードを引くか尋ねるように設定"""
