@@ -30,9 +30,6 @@ dev-dependencies = [
   "pytest>=8.3.4",
 ]
 
-[tool.uv.workspace]
-members = ["src/tools"]
-
 [tool.mypy]
 files = "src"
 ignore_missing_imports = true
