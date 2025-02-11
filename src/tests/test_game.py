@@ -10,7 +10,7 @@ from nicegui_blackjack import Game
 
 
 @pytest.fixture
-def game():
+def game() -> Game:
     """ゲーム"""
     return Game(wait=0)
 
@@ -34,7 +34,7 @@ class Case:
         Case([12, 5, 11, 0, 8, 4], 1, 20, 21, "You loss."),
     ],
 )
-def test_game_case(game: Game, case: Case):
+def test_game_case(game: Game, case: Case) -> None:
     """ゲームのテスト"""
     game.start(nums=list(reversed(case.nums)))
     for _ in range(case.num_hit):

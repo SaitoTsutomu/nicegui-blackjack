@@ -6,7 +6,7 @@ import secrets
 from collections.abc import Iterable
 from enum import IntEnum
 from logging import DEBUG, basicConfig, getLogger
-from typing import Any, Final, Literal, cast
+from typing import Final, Literal, cast
 
 from nicegui import ui
 
@@ -45,7 +45,7 @@ class Card(ui.element):
     rank: Rank
     suit: Suit
 
-    def __init__(self, num: int, *, opened: bool = False):
+    def __init__(self, num: int, *, opened: bool = False) -> None:
         """表と裏のdivタグを作成(デフォルトは裏を表示)"""
         super().__init__()
         self.num = num
@@ -71,7 +71,7 @@ class Card(ui.element):
         """カードの得点"""
         return min(10, self.rank) if self.opened else 0
 
-    def __str__(self):
+    def __str__(self) -> str:
         """文字列化"""
         r = " A 2 3 4 5 6 7 8 910 J Q K"[self.rank * 2 - 2 : self.rank * 2]
         return r + f"({'SHDC'[self.suit]})"
@@ -87,7 +87,7 @@ class Owner(ui.element):
     cards: list[Card]
     container: ui.element
 
-    def __init__(self, nums: Iterable[int], *, opened_num: int, name: str):
+    def __init__(self, nums: Iterable[int], *, opened_num: int, name: str) -> None:
         """GUIと手札の作成"""
         super().__init__()
         self.container = ui.row()
@@ -116,7 +116,7 @@ class Owner(ui.element):
         """メッセージ"""
         return f"point: {self.point()}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """文字列化"""
         return " ".join(f"{card}" if card.opened else f"({card})" for card in self.cards)
 
@@ -176,7 +176,7 @@ class Game(ui.element):
     message: str
     wait: float
 
-    def __init__(self, *, wait: float = 0.6):
+    def __init__(self, *, wait: float = 0.6) -> None:
         """CSSの設定"""
         super().__init__()
         self.wait = wait
@@ -211,7 +211,7 @@ class Game(ui.element):
             }}
         """)
 
-    def start(self, seed: Any = None, *, nums: list[int] | None = None) -> None:
+    def start(self, seed: int | str | None = None, *, nums: list[int] | None = None) -> None:
         """新規ゲーム
 
         :param seed: 乱数シード, defaults to None
@@ -271,12 +271,12 @@ class Game(ui.element):
                 message = "You win."
         self.set_props(ask_visible=False, message=message)
 
-    async def sleep(self, *, is_bit: bool = False):
+    async def sleep(self, *, is_bit: bool = False) -> None:
         """カードがめくれる間だけ待つ"""
         await asyncio.sleep(self.wait * (1 - 0.7 * is_bit))
 
 
-def main(*, reload=False, port=8105) -> None:
+def main(*, reload: bool = False, port: int = 8105) -> None:
     """ゲーム実行"""
     basicConfig(level=DEBUG, format="%(message)s")
     Game().start()
