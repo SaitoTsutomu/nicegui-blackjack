@@ -276,8 +276,8 @@ class Game(ui.element):
         await asyncio.sleep(self.wait * (1 - 0.7 * is_bit))
 
 
-def main(*, reload: bool = False, port: int = 8105) -> None:
+def game(*, port: int | None = None) -> None:
     """ゲーム実行"""
     basicConfig(level=DEBUG, format="%(message)s")
     Game().start()
-    ui.run(title="Blackjack", reload=reload, port=port)
+    ui.run(title="Blackjack", reload=False, port=port)
