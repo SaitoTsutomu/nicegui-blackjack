@@ -276,7 +276,7 @@ class Game(ui.element):
         await asyncio.sleep(self.wait * (1 - 0.7 * is_bit))
 
 
-def game(*, port: int | None = None) -> None:
+def run_game(*, port: int | None = None) -> None:
     """ゲーム実行"""
     basicConfig(level=DEBUG, format="%(message)s")
     Game().start()
