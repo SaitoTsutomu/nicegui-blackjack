@@ -2,7 +2,7 @@
 
 from importlib.metadata import metadata
 
-from fire import Fire as _Fire
+import fire
 
 from .blackjack import Card, Dealer, Game, Owner, Player, Suit, game
 
@@ -15,4 +15,4 @@ __all__ = ["Card", "Dealer", "Game", "Owner", "Player", "Suit", "__author__", "_
 
 def main() -> None:
     """スクリプト実行"""
-    _Fire(game)
+    fire.Fire(game)
